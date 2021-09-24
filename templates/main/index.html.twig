@@ -1,0 +1,72 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Accueil{% endblock %}
+
+{% block body %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-4">
+                {{ form_start(formLigne) }}
+
+                <div class="form-group">
+                    {{ form_label(formLigne.produit) }}
+                    {{ form_widget(formLigne.produit) }}
+                </div>
+                <div class="form-group">
+                    {{ form_row(formLigne.montant) }}
+                </div>
+                <div class="form-group">
+                    {{ form_row(formLigne.quantite) }}
+                </div>
+                <button id="btn1" class="btn btn-primary">
+                    Ajouter
+                </button>
+                {{ form_end(formLigne) }}
+            </div>
+            <div class="col-md-8">
+                <table class="table" id="tab">
+                    <tbody><tr>
+                        <th>
+                            Article
+                        </th>
+                        <th>
+                            Prix
+                        </th>
+                        <th>
+                            Nombre
+                        </th>
+                        <th>
+                            TOTAL
+                        </th>
+                        <th>
+                        </th>
+                    </tr>
+                    {% for ligne in listLigne %}
+                    <tr>
+                        <td>
+                            {{ ligne.produit }}
+                        </td>
+                        <td>
+                            {{ ligne.montant }}
+                        </td>
+                        <td>
+                            {{ ligne.quantite }}
+                        </td>
+                        <td>
+                            {{ ligne.getTotal() }}
+                        </td>
+                        <td>
+                            <a href="{{ path('effacer_ligne', {id : ligne.id })}}"> <button class="btn btn-danger">del</button></a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+                Total Ht : <b><span id="totalHT">{{ totalHt }}</span></b><br><br>
+                TVA : <b><span id="tva">{{ totalTva }}</span></b><br><br>
+                Total TTC <b><span id="totalTTC">{{ totalTtc }}</span></b><br><br>
+
+            </div>
+        </div>
+    </div>
+{% endblock %}
